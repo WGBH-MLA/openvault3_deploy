@@ -1,3 +1,4 @@
 .capistrano
 stuff
 .DS_Store
+log/
