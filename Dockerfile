@@ -1,5 +1,5 @@
 FROM ruby:3.1
-WORKDIR /app
+WORKDIR /root
 
 COPY Gemfile Gemfile.lock ./
 
