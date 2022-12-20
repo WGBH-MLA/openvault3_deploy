@@ -1,22 +1,33 @@
 #!/bin/bash
-HELP="deploy script for AAPB and OpenVault3"
+HELP="deploy script for AAPB and OpenVault3 \n\n
+
+USAGE \n
+./deploy COMMAND [ARGS] \n\n
+
+COMMANDS \n
+b | build \t\t      Build the deployer image \n
+deploy    \t\t      Run the deployer with environment vars passed in \n
+h | help  \t\t      Show this message \n\n
+
+
+Requires a local SSH_KEY. \n
+All environment variables must be exported in the current session, \n
+or passed in on the command line."
 
 IMAGE_NAME=aapb-deploy
 
 VOLUME_MOUNT="-v `pwd`:/root/"
 DOCKER_ARGS="docker run -it $VOLUME_MOUNT"
 
-if [ -z $1 -o $1 = "help" -o $1 = "h" ]; then
-    echo -e $HELP
 
-elif [ $1 = "build" -o $1 = "b" ]; then
+if [ $1 = "build" -o $1 = "b" ]; then
     shift
     # build the docker image
     docker build -t $IMAGE_NAME . "$@"
 
 elif [ $1 = "deploy" ]; then
     shift
-    # deploy aapb
+    # deploy AAPB or OpenVault
     $DOCKER_ARGS \
     -e BRANCH \
     -e APP_NAME \
@@ -26,7 +37,6 @@ elif [ $1 = "deploy" ]; then
     $IMAGE_NAME "$@"
 
 else 
-    echo -e "$1 command not recognized\n"
-    echo "$@"
+    echo "command not recognized: $@"
     echo -e $HELP
 fi
