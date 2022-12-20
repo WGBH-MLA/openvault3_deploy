@@ -5,4 +5,4 @@ COPY Gemfile Gemfile.lock ./
 
 RUN bundle install
 
-CMD bash
+CMD bundle exec cap aws deploy

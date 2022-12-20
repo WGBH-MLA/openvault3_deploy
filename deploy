@@ -14,20 +14,17 @@ elif [ $1 = "build" -o $1 = "b" ]; then
     # build the docker image
     docker build -t $IMAGE_NAME . "$@"
 
-elif [ $1 = "aapb" -o $1 = "aapb-demo" ]; then
+elif [ $1 = "deploy" ]; then
     shift
     # deploy aapb
     $DOCKER_ARGS \
-    -e BRANCH=24-og-timestamps \
-    -e APP_NAME=aapb \
-    -e REPO_URL=https://github.com/WGBH-MLA/AAPB2.git \
-    -e SSH_HOST=18.213.230.80 \
-    -e SSH_KEY=/root/aapb.wgbh-mla.org.pem \
+    -e BRANCH \
+    -e APP_NAME \
+    -e REPO_URL \
+    -e SSH_HOST \
+    -e SSH_KEY \
     $IMAGE_NAME "$@"
 
-elif [ $1 = "openvault" -o $1 = "openvault-demo" ]; then
-    shift
-    # OpenVault deploy
 else 
     echo -e "$1 command not recognized\n"
     echo "$@"
