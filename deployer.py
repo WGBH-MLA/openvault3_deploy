@@ -9,6 +9,7 @@ from subprocess import run as sub_run
 import click
 
 GITHUB_URL = 'https://github.com/WGBH-MLA/'
+DOCKER_IMAGE = 'ghcr.io/wgbh-mla/openvault3_deploy:pr-84'
 
 
 def run_interactive(cmd: str):
@@ -31,7 +32,7 @@ def deploy(context, branch):
 
     click.echo(f"Deploying: { context }")
     click.echo(f"Branch: { branch }")
-    cmd = f"""docker run -it -v {realpath('')}:/root/ aapb-deploy"""
+    cmd = f"""docker run -it -v {realpath('')}:/root/ {DOCKER_IMAGE}"""
 
     sub_run(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
 
