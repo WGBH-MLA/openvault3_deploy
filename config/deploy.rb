@@ -1,6 +1,4 @@
 # For more options, see http://capistranorb.com/documentation/getting-started/configuration/#
-# config valid only for current version of Capistrano
-lock '3.3.5'
 
 # 'openvault' or 'AAPB'
 set :application, ENV['APP_NAME']
