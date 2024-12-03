@@ -3,7 +3,6 @@
 # 'openvault' or 'AAPB'
 set :application, ENV['APP_NAME']
 set :repo_url, ENV['REPO_URL']
-set :rails_env, 'production'
 set :shared_path, "/var/www/#{ENV['APP_NAME']}/shared"
 
 if ENV['BRANCH'] && ENV['BRANCH'].length > 0
@@ -27,7 +26,7 @@ end
 
 # Add the path to bundler, /home/ec2-user/bin, to $PATH env var.
 set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'tmp/downloads', 'jetty')
-set :rails_env, :production
+set :rails_env, ENV.fetch('RAILS_ENV', 'production')
 set :default_env, { 'PATH' => '$PATH:/home/ec2-user/bin' }
 set :bundle_flags, '--deployment'
 set :keep_releases, 1
@@ -39,12 +38,18 @@ verify_git_status!
 set :linked_dirs, fetch(:linked_dirs, []).push('log')
 namespace :deploy do
 
+  # Print relevant info prior to deployment
+  before 'deploy:starting', :print_info do
+    on roles(:all) do
+      info "Deploying branch: #{fetch(:branch)}"
+    end
+  end
+
   after :published, :ensure_jetty_is_installed do
     invoke 'jetty:install'
   end
 
   if ENV['APP_NAME'] == 'aapb'
-
     after :updated, :set_passenger_path do
       invoke 'deploy:config:remove_duplicate_passenger'
     end

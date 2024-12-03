@@ -1,3 +1,4 @@
+# Usage: bundle exec cap aws revision
 desc 'Print the current Git revision'
 task :revision do
   on roles(:web) do
