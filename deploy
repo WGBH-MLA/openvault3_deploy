@@ -17,7 +17,7 @@ or passed in on the command line."
 IMAGE_NAME=aapb-deploy
 
 VOLUME_MOUNT="-v `pwd`:/root/"
-DOCKER_ARGS="docker run -it $VOLUME_MOUNT"
+DOCKER_ARGS="docker run -it --rm $VOLUME_MOUNT"
 
 
 if [ $1 = "build" -o $1 = "b" ]; then
