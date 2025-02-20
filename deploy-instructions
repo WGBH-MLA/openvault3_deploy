@@ -39,5 +39,5 @@ AAPB Pro Pro
 export BRANCH=master
 export APP_NAME=aapb
 export REPO_URL=https://github.com/WGBH-MLA/AAPB2.git
-export SSH_HOST=52.55.103.243
+export SSH_HOST=107.22.193.22
 export SSH_KEY=~/.ssh/aapb.wgbh-mla.org.pem
