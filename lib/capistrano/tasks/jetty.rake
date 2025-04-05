@@ -14,7 +14,9 @@ namespace :jetty do
           # This is a little hairy, but it gets the PIDs of all running jetty
           # processes. There shouldn't be more than 1, but we want to kill
           # them all.
-          jetty_pids = capture("ps ax | grep 'jetty/solr -jar start.jar' | grep -v 'grep' | awk '{print $1}'").split(/\s/)
+          # NOTE: currently our install of jetty will always be started with the 'solr' executable and 'start.jar'
+          # so that is what we look for. But if our start command for jetty changes, this will need to be updated.
+          jetty_pids = capture("ps ax | grep -e 'jetty\/solr.*start.jar' | grep -v 'grep' | awk '{print $1}'").split(/\s/)
           jetty_pids.each do |jetty_pid|
             execute :kill, jetty_pid
           end
